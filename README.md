@@ -58,7 +58,28 @@ order: 1                          # 排序,也是首页描边水印的数字来�
 
 正文三段式：解决什么 / 关键决策 / 技术。事实必须能与 GitHub 仓库对应。
 
-**加文章**：`src/content/blog/` 加 `.md`，字段 `title / date / summary / category（可选）`。写完 `git push` 即发布（配 GitHub Actions 后自动构建部署）。
+**加文章**：`src/content/blog/` 加 `.md`，frontmatter 四个字段：
+
+```yaml
+---
+title: 文章标题                 # 必填,列表/卡片/浏览器标签页都显示它
+date: 2026-11-27               # 必填,列表按它倒序
+summary: 一句话摘要            # 必填,列表和分享卡片用
+category: 踩坑记               # 可选,填了才有分类筛选和标签
+---
+
+正文 Markdown……
+```
+
+写完 `git push` 即发布（配 GitHub Actions 后自动构建部署）。分类不用预先注册：`.md` 里写一个新的 `category` 值，列表页的筛选 chips、标签总览页、归档页会自动多出这一类——**没有分类管理后台，frontmatter 就是分类的单一事实来源**。
+
+删除/改名分类 = 把对应文章的 `category` 字段改掉或删掉即可，所有页面自动跟随。
+
+正文支持全套 Markdown：标题、列表、表格、代码块（` ```java ` 带语法高亮）、引用、图片、分割线。
+
+**改站名/自我介绍等卡片文案后**：跑 `NODE_PATH='E:\gitWork\study\learning-studio\lumen\node_modules' node scripts/gen-og.cjs` 重新生成 `public/og.png`（OG 分享卡片图），否则分享出去的还是旧图。
+
+**评论（giscus）**：已启用——评论数据存在仓库 Discussions 的 Announcements 分类，访客需 GitHub 登录后评论，零后端。配置在 `src/components/Comments.astro`。
 
 ## 截图
 

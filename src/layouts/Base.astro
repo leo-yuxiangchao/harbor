@@ -42,7 +42,9 @@ const ogImage = Astro.site ? new URL('/og.png', Astro.site) : undefined;
       // 未手动选择过主题时跟随系统变化
       m.addEventListener('change', (e) => {
         if (!localStorage.getItem('theme')) {
-          document.documentElement.dataset.theme = e.matches ? 'dark' : 'light';
+          const next = e.matches ? 'dark' : 'light';
+          document.documentElement.dataset.theme = next;
+          window.dispatchEvent(new CustomEvent('themechange', { detail: next }));
         }
       });
     </script>

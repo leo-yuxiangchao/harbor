@@ -5,6 +5,12 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const counts = new Map<string, number>();
+for (const p of posts) {
+  const c = p.data.category;
+  if (c) counts.set(c, (counts.get(c) ?? 0) + 1);
+}
+const tags = [...counts.entries()].sort((a, b) => b[1] - a[1]);
 ---
 
 <Base title="文章">
@@ -12,12 +18,23 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
     <section class="page-head reveal">
       <div class="sec-head" style="margin-bottom:14px">
         <span class="idx">02 /</span><h2 style="font-size:clamp(2rem,5vw,2.8rem)">文章</h2><span class="rule"></span>
+        <div class="head-links">
+          <a class="more" href="/blog/archive/">归档</a>
+        </div>
       </div>
       <p class="desc">做项目的过程和想法，写下来。</p>
+
+      <div class="filter" id="filter">
+        <button class="chip-btn" data-tag="" type="button">全部 <span class="count">{posts.length}</span></button>
+        {tags.map(([tag, count]) => (
+          <button class="chip-btn" data-tag={tag} type="button">{tag} <span class="count">{count}</span></button>
+        ))}
+      </div>
     </section>
-    <div class="posts reveal">
+
+    <div class="posts reveal" id="posts">
       {posts.map((p) => (
-        <a class="post" href={`/blog/${p.id}/`}>
+        <a class="post" href={`/blog/${p.id}/`} data-cat={p.data.category ?? ''}>
           <time>{fmt(p.data.date)}</time>
           <span class="title-wrap">
             <span class="title">{p.data.title}</span>
@@ -34,8 +51,33 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
 <style>
   .page-head { padding-top: clamp(48px, 8vh, 80px); }
   .desc { margin: 0; color: var(--muted); }
+  .head-links { display: flex; gap: 16px; margin-left: auto; }
+  .head-links .more { font-family: var(--font-mono); font-size: 13.5px; color: var(--muted); text-decoration: none; }
+  .head-links .more:hover { color: var(--accent); }
+
+  .filter { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .chip-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 13px; font-weight: 600;
+    color: var(--secondary);
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 8px; padding: 6px 13px;
+    cursor: pointer;
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .chip-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .chip-btn.active {
+    color: var(--accent); border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .chip-btn .count {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+    color: var(--dim);
+  }
+  .chip-btn.active .count { color: var(--accent); }
+
   .posts {
-    margin-top: 32px;
+    margin-top: 24px;
     border: 1px solid var(--line); border-radius: 12px;
     background: var(--card); overflow: hidden;
   }
@@ -47,6 +89,7 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
   }
   .post + .post { border-top: 1px solid var(--line); }
   .post:hover { background: var(--accent-soft); }
+  .post.hidden { display: none; }
   time {
     font-family: var(--font-mono); font-size: 12.5px;
     color: var(--dim); min-width: 92px;
@@ -69,3 +112,25 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
     .summary, .cat { display: none; }
   }
 </style>
+
+<script is:inline>
+  // 分类筛选:即时过滤 + ?tag= 同步地址栏(可分享/可回退)
+  const btns = [...document.querySelectorAll('.chip-btn')];
+  const rows = [...document.querySelectorAll('#posts .post')];
+
+  function apply(tag) {
+    btns.forEach((b) => b.classList.toggle('active', b.dataset.tag === tag));
+    rows.forEach((r) => r.classList.toggle('hidden', tag !== '' && r.dataset.cat !== tag));
+    const url = new URL(location.href);
+    if (tag) url.searchParams.set('tag', tag);
+    else url.searchParams.delete('tag');
+    history.replaceState(null, '', url);
+  }
+
+  btns.forEach((b) => b.addEventListener('click', () => {
+    apply(b.dataset.tag);
+    history.pushState(null, '', location.href);
+  }));
+  window.addEventListener('popstate', () => apply(new URL(location.href).searchParams.get('tag') ?? ''));
+  apply(new URL(location.href).searchParams.get('tag') ?? '');
+</script>

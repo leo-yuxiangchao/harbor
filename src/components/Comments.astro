@@ -1,0 +1,43 @@
+---
+// giscus 评论(以 GitHub Discussions 为数据源,零后端)。已配置完成。
+// 访客需 GitHub 登录才能评论;评论落在仓库 Discussions 的 Announcements 分类。
+---
+
+<section class="comments" aria-label="评论">
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="leo-yuxiangchao/harbor"
+    data-repo-id="R_kgDOV9nong"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOV9nons4DMEZ2"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async
+  ></script>
+</section>
+
+<style>
+  .comments {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  /* 与站点主题同步:Header 切换主题时派发 themechange 事件 */
+</style>
+
+<script is:inline>
+  window.addEventListener('themechange', (e) => {
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (!iframe) return;
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme: e.detail === 'dark' ? 'dark' : 'light' } } },
+      'https://giscus.app',
+    );
+  });
+</script>
