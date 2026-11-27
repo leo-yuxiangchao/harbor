@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="关于">
+  <div class="container">
+    <article class="about reveal">
+      <div class="sec-head" style="margin-bottom:14px">
+        <span class="idx">03 /</span><h2 style="font-size:clamp(2rem,5vw,2.8rem)">关于</h2><span class="rule"></span>
+      </div>
+
+      <section class="block">
+        <h3>我</h3>
+        <p>
+          技术爱好者。喜欢折腾能用在自家生活里的小软件，用技术把生活一点点智能化——记账、做视频、自学，
+          都给自己做了趁手的工具：家庭记账 Aurum、推文视频流水线 InkFlow、AI 学习系统 Learning Studio，
+          全部开源在 GitHub。
+        </p>
+      </section>
+
+      <section class="block">
+        <h3>这个站</h3>
+        <p>
+          Harbor，港湾。三个业余项目（
+          <a href="/projects/aurum/">Aurum</a>、
+          <a href="/projects/inkflow/">InkFlow</a>、
+          <a href="/projects/learning-studio/">Learning Studio</a>
+          ）停泊的地方，也是我写字的地方。
+          用 <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> 构建成纯静态站点，
+          没有后端，内容是 Git 里的 Markdown。
+        </p>
+      </section>
+
+      <section class="block">
+        <h3>联系</h3>
+        <p>
+          GitHub：<a href="https://github.com/leo-yuxiangchao" target="_blank" rel="noopener">leo-yuxiangchao</a>
+        </p>
+        <p>
+          邮箱：<a href="mailto:15171122729@163.com">15171122729@163.com</a>
+        </p>
+      </section>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .about { padding-top: clamp(48px, 8vh, 80px); max-width: 720px; }
+  .block { margin-top: 40px; }
+  h3 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  p { margin: 0; color: var(--secondary); line-height: 1.95; }
+  p + p { margin-top: 10px; }
+</style>

@@ -1,0 +1,116 @@
+@import '@fontsource-variable/manrope';
+
+/* ---------- 基础 ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+::selection { background: rgba(37, 99, 235, .25); }
+
+a { color: var(--accent); text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; }
+
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin-inline: auto;
+  padding-inline: 32px;
+}
+
+/* ---------- 入场：进入视口交错浮现（.js 门控:no-JS 时内容默认可见） ---------- */
+.js .reveal > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s var(--ease-enter), transform .5s var(--ease-enter);
+}
+.js .reveal.in > * { opacity: 1; transform: none; }
+.js .reveal.in > *:nth-child(2) { transition-delay: 70ms; }
+.js .reveal.in > *:nth-child(3) { transition-delay: 140ms; }
+.js .reveal.in > *:nth-child(4) { transition-delay: 210ms; }
+.js .reveal.in > *:nth-child(n+5) { transition-delay: 280ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal > * { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14.5px; font-weight: 600; font-family: inherit;
+  padding: 12px 26px; border-radius: 10px;
+  text-decoration: none; cursor: pointer; border: 1px solid transparent;
+  transition: transform .15s, box-shadow .15s, border-color .15s, background .15s;
+}
+.btn-primary { background: var(--accent); color: #fff; box-shadow: var(--btn-shadow); }
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
+.btn-ghost { background: var(--card); color: var(--ink); border-color: var(--line-strong); }
+.btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+/* ---------- 技术标签 ---------- */
+.chip {
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--secondary);
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 6px; padding: 2px 8px;
+}
+
+/* ---------- 状态徽章（DEV / LIVE） ---------- */
+.status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--secondary);
+  background: var(--status-chip-bg); border-radius: 6px; padding: 3px 10px;
+  white-space: nowrap;
+}
+.status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+.status--live::before { background: var(--green); }
+.status--dev::before { background: var(--amber); }
+
+/* ---------- 区块头：编号 + 标题 + 延展线 ---------- */
+.sec-head { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; }
+.sec-head .idx { font-family: var(--font-mono); font-size: 13px; color: var(--accent); font-weight: 700; }
+.sec-head h2 { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+.sec-head .rule { flex: 1; border-top: 1px solid var(--line); }
+.sec-head .more {
+  font-family: var(--font-mono); font-size: 13.5px; color: var(--muted);
+  text-decoration: none;
+}
+.sec-head .more:hover { color: var(--accent); }
+
+/* ---------- 文章排版 ---------- */
+.prose { line-height: 1.95; color: var(--secondary); font-size: 15.5px; }
+.prose h2, .prose h3 { color: var(--ink); line-height: 1.4; letter-spacing: -.01em; }
+.prose h2 { font-size: 1.45rem; margin: 2.2em 0 .9em; }
+.prose h3 { font-size: 1.15rem; margin: 1.8em 0 .7em; }
+.prose p { margin: 1em 0; }
+.prose ul { padding-left: 1.4em; }
+.prose li { margin: .3em 0; }
+.prose a { text-decoration: underline; text-underline-offset: 3px; }
+.prose code {
+  font-family: var(--font-mono); font-size: .88em;
+  padding: 2px 7px; border-radius: 6px;
+  background: var(--accent-soft); color: var(--accent);
+}
+.prose blockquote {
+  margin: 1.5em 0; padding: 4px 18px;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}

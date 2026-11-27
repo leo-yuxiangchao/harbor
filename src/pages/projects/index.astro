@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="项目">
+  <div class="container">
+    <section class="page-head reveal">
+      <div class="sec-head" style="margin-bottom:14px">
+        <span class="idx">01 /</span><h2 style="font-size:clamp(2rem,5vw,2.8rem)">项目</h2><span class="rule"></span>
+      </div>
+      <p class="desc">业余做的三个小产品，都在 GitHub 上开源。</p>
+    </section>
+    <div class="cards reveal">
+      {projects.map((p) => <ProjectCard project={p} showDescription />)}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page-head { padding-top: clamp(48px, 8vh, 80px); }
+  .desc { margin: 0; color: var(--muted); }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+    margin-top: 32px;
+  }
+</style>

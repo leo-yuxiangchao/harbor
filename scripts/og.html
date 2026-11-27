@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- OG 分享卡片图(1200x630),由 scripts/gen-og.cjs 截图生成到 public/og.png -->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    width: 1200px; height: 630px;
+    background: #0b1220;
+    color: #e2e8f0;
+    font-family: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .glow {
+    position: absolute; right: -120px; top: -160px; width: 520px; height: 520px;
+    background: radial-gradient(closest-side, rgba(59,130,246,.25), rgba(34,211,238,.1) 55%, transparent 72%);
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, #233550 1.2px, transparent 1.2px);
+    background-size: 30px 30px;
+    -webkit-mask-image: linear-gradient(160deg, rgba(0,0,0,.5), transparent 70%);
+            mask-image: linear-gradient(160deg, rgba(0,0,0,.5), transparent 70%);
+  }
+  .main { position: relative; text-align: center; }
+  .brand {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-size: 26px; font-weight: 800; letter-spacing: -.01em;
+  }
+  .mark {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    display: grid; place-items: center;
+    color: #fff; font-size: 24px; font-weight: 800;
+  }
+  h1 {
+    margin-top: 34px;
+    font-size: 96px; font-weight: 800; letter-spacing: -.04em;
+  }
+  h1 .dot {
+    background: linear-gradient(135deg, #3b82f6, #22d3ee);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .tag { margin-top: 18px; font-size: 24px; color: #94a3b8; }
+  .chips { margin-top: 40px; display: flex; gap: 14px; justify-content: center; }
+  .chip {
+    font-family: ui-monospace, Consolas, monospace; font-size: 17px;
+    color: #cbd5e1; border: 1px solid #334155; border-radius: 8px; padding: 6px 16px;
+    background: #101a2c;
+  }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="grid"></div>
+  <div class="main">
+    <div class="brand"><span class="mark">H</span>Harbor</div>
+    <h1>Leo<span class="dot">.</span></h1>
+    <p class="tag">技术爱好者 · 折腾自用的小软件</p>
+    <div class="chips"><span class="chip">Aurum</span><span class="chip">InkFlow</span><span class="chip">Learning Studio</span></div>
+  </div>
+</body>
+</html>

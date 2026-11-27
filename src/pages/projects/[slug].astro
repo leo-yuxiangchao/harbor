@@ -1,0 +1,59 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, tagline, status, tech, github } = project.data;
+const isLive = status.includes('已投入使用');
+---
+
+<Base title={title} description={tagline}>
+  <div class="container">
+    <article class="detail reveal">
+      <a class="back" href="/projects/">← 全部项目</a>
+      <header class="head">
+        <div class="title-row">
+          <h1>{title}</h1>
+          <span class:list={['status', isLive ? 'status--live' : 'status--dev']}>{status}</span>
+        </div>
+        <p class="tagline">{tagline}</p>
+        <div class="chips">
+          {tech.map((t) => <span class="chip">{t}</span>)}
+        </div>
+        <div class="links">
+          <a class="btn btn-primary" href={github} target="_blank" rel="noopener">在 GitHub 查看 ↗</a>
+        </div>
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .detail { padding-top: clamp(40px, 7vh, 64px); max-width: 780px; }
+  .back {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .back:hover { color: var(--ink); }
+  .head { margin-top: 26px; }
+  .title-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  h1 { margin: 0; font-size: clamp(1.9rem, 5vw, 2.6rem); font-weight: 800; letter-spacing: -.025em; }
+  .tagline { margin: 14px 0 0; font-size: 17px; color: var(--secondary); line-height: 1.8; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+  .links { margin-top: 28px; }
+  .prose { margin-top: 44px; }
+</style>

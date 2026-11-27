@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>编辑杂志风 · Harbor</title>
+<style>
+  :root {
+    --paper: #fcfbf7;
+    --ink: #1c1a16;
+    --muted: #6b655c;
+    --accent: #b3402a;
+    --rule: #d8d3c8;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
+    line-height: 1.9;
+    font-size: 16px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+  nav {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 28px 0 20px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .brand { font-size: 22px; font-weight: 700; letter-spacing: .02em; }
+  .brand em { font-style: normal; color: var(--accent); }
+  .nav-links a {
+    color: var(--ink); text-decoration: none; margin-left: 26px;
+    font-size: 14.5px; letter-spacing: .1em;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .hero { padding: 88px 0 72px; border-bottom: 1px solid var(--rule); }
+  .eyebrow { font-size: 14px; color: var(--muted); letter-spacing: .3em; margin-bottom: 20px; }
+  h1 { font-size: 88px; font-weight: 900; line-height: 1.1; letter-spacing: .01em; }
+  h1 .dot { color: var(--accent); }
+  .lead { margin-top: 26px; font-size: 18px; color: #3d3a34; max-width: 30em; }
+  .cta { margin-top: 36px; display: flex; gap: 24px; align-items: center; }
+  .btn-main {
+    font-family: inherit; font-size: 15px; letter-spacing: .12em;
+    background: var(--ink); color: var(--paper); border: none;
+    padding: 12px 28px; cursor: pointer;
+  }
+  .btn-main:hover { background: var(--accent); }
+  .btn-text { font-size: 15px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+  .btn-text:hover { color: var(--accent); border-color: var(--accent); }
+  section { padding: 64px 0; border-bottom: 1px solid var(--rule); }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 36px; }
+  h2 { font-size: 30px; font-weight: 700; }
+  h2::before { content: ''; display: inline-block; width: 28px; height: 3px; background: var(--accent); margin-right: 14px; vertical-align: middle; }
+  .sec-more { font-size: 13.5px; color: var(--muted); text-decoration: none; letter-spacing: .1em; }
+  .proj { display: flex; align-items: baseline; gap: 28px; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+  .proj:first-of-type { border-top: 1px solid var(--rule); }
+  .proj .no { font-size: 14px; color: var(--accent); font-weight: 700; min-width: 34px; }
+  .proj .name { font-size: 21px; font-weight: 700; min-width: 240px; }
+  .proj .name small { display: block; font-size: 13px; font-weight: 400; color: var(--muted); margin-top: 4px; }
+  .proj .desc { flex: 1; font-size: 14.5px; color: #4a463f; }
+  .proj .tech { font-size: 13px; color: var(--muted); text-align: right; min-width: 140px; }
+  .post { display: flex; gap: 28px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+  .post:first-of-type { border-top: 1px solid var(--rule); }
+  .post time { font-size: 13.5px; color: var(--muted); min-width: 96px; font-variant-numeric: tabular-nums; }
+  .post a { color: var(--ink); font-size: 16.5px; text-decoration: none; font-weight: 600; }
+  .post a:hover { color: var(--accent); }
+  footer { padding: 36px 0 44px; text-align: center; font-size: 13px; color: var(--muted); letter-spacing: .06em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand">Harbor<em>.</em></div>
+    <div class="nav-links"><a href="#">项目</a><a href="#">文章</a><a href="#">关于</a></div>
+  </nav>
+  <div class="hero">
+    <p class="eyebrow">你好，我是</p>
+    <h1>Leo<span class="dot">.</span></h1>
+    <p class="lead">全栈开发者。工作里做物流系统，业余做自己的小产品——记账、内容生产、学习工具。</p>
+    <div class="cta">
+      <button class="btn-main">看 项 目</button>
+      <a class="btn-text" href="#">GitHub →</a>
+    </div>
+  </div>
+  <section>
+    <div class="sec-head"><h2>项目</h2><a class="sec-more" href="#">全部 →</a></div>
+    <div class="proj"><span class="no">01</span><div class="name">Aurum<small>开发中</small></div><p class="desc">家庭共享记账，统计可按个人 / 家庭两种口径切换</p><span class="tech">Go · uni-app</span></div>
+    <div class="proj"><span class="no">02</span><div class="name">InkFlow<small>V1 已投入使用</small></div><p class="desc">小说推文视频流水线，2 小时一条到 30 分钟一条</p><span class="tech">Java · Vue</span></div>
+    <div class="proj"><span class="no">03</span><div class="name">Learning Studio<small>开发中</small></div><p class="desc">AI 驱动的个人学习系统</p><span class="tech">Java 21 · Vue 3</span></div>
+  </section>
+  <section>
+    <div class="sec-head"><h2>文章</h2><a class="sec-more" href="#">全部 →</a></div>
+    <div class="post"><time>2026-11-26</time><a href="#">Harbor 这个站是怎么搭的</a></div>
+    <div class="post"><time>2026-11-26</time><a href="#">三个业余项目的共同骨架</a></div>
+  </section>
+  <footer>© 2026 Leo · Harbor · GitHub · 用 Astro 搭建</footer>
+</div>
+</body>
+</html>

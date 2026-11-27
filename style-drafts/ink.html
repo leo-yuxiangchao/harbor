@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新中式纸墨 · Harbor</title>
+<style>
+  :root {
+    --paper: #f4efe4;
+    --paper-deep: #ece5d4;
+    --ink: #2c2a24;
+    --muted: #857c6a;
+    --seal: #a83a2c;
+    --rule: #cfc5ae;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background:
+      radial-gradient(140% 100% at 50% 0%, rgba(255,255,255,.5), transparent 60%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    line-height: 2.0; font-size: 16px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 30px 0 22px;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand .zh { font-size: 24px; font-weight: 700; letter-spacing: .3em; }
+  .brand .en { font-size: 11px; color: var(--muted); letter-spacing: .25em; text-transform: uppercase; }
+  .nav-links a { color: var(--ink); text-decoration: none; margin-left: 24px; font-size: 15px; letter-spacing: .2em; }
+  .nav-links a:hover { color: var(--seal); }
+  .hero {
+    position: relative;
+    padding: 84px 0 72px;
+    border-top: 3px double var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .vertical {
+    position: absolute; right: 0; top: 84px;
+    writing-mode: vertical-rl;
+    font-size: 13px; color: var(--muted); letter-spacing: .5em;
+  }
+  .eyebrow { font-size: 14px; color: var(--muted); letter-spacing: .4em; }
+  h1 { font-size: 76px; font-weight: 900; letter-spacing: .06em; margin-top: 20px; }
+  .lead { margin-top: 24px; font-size: 17px; color: #45413a; max-width: 28em; }
+  .cta { margin-top: 38px; display: flex; align-items: center; gap: 26px; }
+  .btn-seal {
+    background: var(--seal); color: #f7f2e7; border: none;
+    font-family: inherit; font-size: 15px; letter-spacing: .35em;
+    padding: 12px 26px 12px 32px; cursor: pointer; border-radius: 3px;
+  }
+  .btn-seal:hover { background: #8f3125; }
+  .btn-text { color: var(--ink); font-size: 15px; text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
+  .btn-text:hover { color: var(--seal); border-color: var(--seal); }
+  section { padding: 60px 0; border-bottom: 1px solid var(--rule); }
+  h2 { font-size: 26px; font-weight: 700; letter-spacing: .2em; display: flex; align-items: center; gap: 16px; }
+  h2::after { content: ''; flex: 1; border-top: 1px solid var(--rule); }
+  .sec-more { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .proj {
+    display: flex; align-items: baseline; gap: 18px;
+    padding: 18px 0;
+  }
+  .proj .name { font-size: 19px; font-weight: 700; white-space: nowrap; }
+  .proj .status { font-size: 12.5px; color: var(--seal); white-space: nowrap; }
+  .proj .dots { flex: 1; border-bottom: 1px dotted var(--muted); transform: translateY(-6px); }
+  .proj .tech { font-size: 13.5px; color: var(--muted); white-space: nowrap; }
+  .proj .desc { display: block; font-size: 14px; color: #565046; margin: -8px 0 8px; }
+  .post { display: flex; align-items: baseline; gap: 18px; padding: 14px 0; }
+  .post a { color: var(--ink); font-size: 16.5px; font-weight: 600; text-decoration: none; }
+  .post a:hover { color: var(--seal); }
+  .post .dots { flex: 1; border-bottom: 1px dotted var(--muted); transform: translateY(-6px); }
+  .post time { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  footer { padding: 40px 0 48px; text-align: center; }
+  .seal-stamp {
+    display: inline-block; width: 44px; height: 44px;
+    background: var(--seal); color: #f7f2e7;
+    font-size: 19px; font-weight: 700; line-height: 44px;
+    border-radius: 4px; letter-spacing: 0;
+    box-shadow: 1px 1px 0 rgba(0,0,0,.15);
+    font-family: inherit;
+  }
+  footer p { margin-top: 16px; font-size: 12.5px; color: var(--muted); letter-spacing: .15em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand"><span class="zh">港湾</span><span class="en">HARBOR</span></div>
+    <div class="nav-links"><a href="#">项目</a><a href="#">文章</a><a href="#">关于</a></div>
+  </nav>
+  <div class="hero">
+    <p class="vertical">为学日益 · 为道日损</p>
+    <p class="eyebrow">你好，我是</p>
+    <h1>Leo</h1>
+    <p class="lead">全栈开发者。工作里做物流系统，业余做自己的小产品——记账、内容生产、学习工具。</p>
+    <div class="cta">
+      <button class="btn-seal">观项目</button>
+      <a class="btn-text" href="#">GitHub →</a>
+    </div>
+  </div>
+  <section>
+    <h2>项目 <a class="sec-more" href="#">全部 →</a></h2>
+    <div style="margin-top:26px">
+      <div class="proj"><span class="name">Aurum</span><span class="status">开发中</span><span class="dots"></span><span class="tech">Go · uni-app</span></div>
+      <p class="desc">家庭共享记账，统计可按个人 / 家庭两种口径切换</p>
+      <div class="proj"><span class="name">InkFlow 墨流工作台</span><span class="status">已投入使用</span><span class="dots"></span><span class="tech">Java · Vue</span></div>
+      <p class="desc">小说推文视频流水线，2 小时一条到 30 分钟一条</p>
+      <div class="proj"><span class="name">Learning Studio</span><span class="status">开发中</span><span class="dots"></span><span class="tech">Java 21 · Vue 3</span></div>
+      <p class="desc">AI 驱动的个人学习系统</p>
+    </div>
+  </section>
+  <section>
+    <h2>文章 <a class="sec-more" href="#">全部 →</a></h2>
+    <div style="margin-top:22px">
+      <div class="post"><a href="#">Harbor 这个站是怎么搭的</a><span class="dots"></span><time>2026-11-26</time></div>
+      <div class="post"><a href="#">三个业余项目的共同骨架</a><span class="dots"></span><time>2026-11-26</time></div>
+    </div>
+  </section>
+  <footer>
+    <span class="seal-stamp">Leo</span>
+    <p>© 2026 · 港湾 HARBOR · 用 ASTRO 搭建</p>
+  </footer>
+</div>
+</body>
+</html>

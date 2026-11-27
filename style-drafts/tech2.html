@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>清新科技 v2 · Harbor</title>
+<style>
+  :root {
+    --bg: #f7fafc;
+    --card: #ffffff;
+    --ink: #0f172a;
+    --secondary: #334155;
+    --muted: #64748b;
+    --dim: #94a3b8;
+    --line: #e2e8f0;
+    --line-strong: #cbd5e1;
+    --accent: #2563eb;
+    --accent-soft: #eff6ff;
+    --cyan: #06b6d4;
+    --green: #16a34a;
+    --amber: #d97706;
+    --mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    font-size: 15px; line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- 导航 ---------- */
+  nav { display: flex; align-items: center; gap: 32px; height: 64px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.7); }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 17px; letter-spacing: -.01em; }
+  .brand .mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    display: grid; place-items: center; color: #fff; font-size: 13px; font-weight: 800;
+  }
+  .nav-links { display: flex; gap: 4px; margin-left: auto; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; padding: 6px 13px; border-radius: 8px; transition: color .15s, background .15s; }
+  .nav-links a:hover { color: var(--ink); background: #eef2f7; }
+  .gh-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13.5px; font-weight: 600; color: var(--ink);
+    text-decoration: none; padding: 7px 16px;
+    border: 1px solid var(--line-strong); border-radius: 8px; background: var(--card);
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .gh-btn:hover { border-color: var(--ink); box-shadow: 0 2px 8px rgba(15,23,42,.08); }
+
+  /* ---------- 首屏 ---------- */
+  .hero { position: relative; padding: 96px 0 88px; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(circle, var(--line-strong) 1.1px, transparent 1.1px);
+    background-size: 26px 26px;
+    -webkit-mask-image: linear-gradient(160deg, rgba(0,0,0,.6) 20%, rgba(0,0,0,.1) 65%, transparent 85%);
+            mask-image: linear-gradient(160deg, rgba(0,0,0,.6) 20%, rgba(0,0,0,.1) 65%, transparent 85%);
+  }
+  .hero::after {
+    content: ''; position: absolute; right: -180px; top: -220px; width: 560px; height: 560px;
+    background: radial-gradient(closest-side, rgba(37,99,235,.14), rgba(6,182,212,.07) 55%, transparent 72%);
+    pointer-events: none;
+  }
+  .hero .wrap { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 64px; align-items: center; }
+  .watermark {
+    position: absolute; right: 24px; bottom: -58px;
+    font-family: var(--mono); font-size: 300px; font-weight: 800; line-height: 1;
+    color: transparent; -webkit-text-stroke: 1.2px rgba(15,23,42,.07);
+    pointer-events: none; user-select: none;
+  }
+  .cross { position: absolute; font-family: var(--mono); color: var(--line-strong); font-size: 15px; pointer-events: none; }
+
+  .kicker {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .kicker::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(6,182,212,.4); } 50% { opacity: .55; box-shadow: 0 0 0 6px rgba(6,182,212,0); } }
+  h1 { margin-top: 22px; font-size: 104px; font-weight: 800; letter-spacing: -.045em; line-height: 1; }
+  h1 .dot {
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .lead { margin-top: 26px; max-width: 30em; font-size: 17.5px; color: var(--secondary); }
+  .cta { display: flex; gap: 14px; margin-top: 38px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14.5px; font-weight: 600; text-decoration: none;
+    padding: 12px 26px; border-radius: 10px;
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 6px 16px -6px rgba(37,99,235,.45); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -6px rgba(37,99,235,.5); }
+  .btn-ghost { background: var(--card); color: var(--ink); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+  /* ---------- 状态面板 ---------- */
+  .panel {
+    position: relative;
+    border-radius: 16px; padding: 1.5px;
+    background: linear-gradient(140deg, rgba(37,99,235,.55), rgba(6,182,212,.28) 38%, var(--line) 70%);
+    box-shadow: 0 24px 48px -24px rgba(37,99,235,.28);
+  }
+  .panel-in {
+    background: var(--card); border-radius: 14.5px;
+    padding: 22px 24px;
+  }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; }
+  .panel-title { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; color: var(--dim); text-transform: uppercase; }
+  .panel-live { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11.5px; font-weight: 700; color: var(--green); }
+  .panel-live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2.2s ease-in-out infinite; }
+  .panel-body { margin-top: 18px; }
+  .prow {
+    display: grid; grid-template-columns: 10px 1fr auto auto; gap: 12px; align-items: center;
+    padding: 13px 4px;
+  }
+  .prow + .prow { border-top: 1px dashed var(--line); }
+  .prow .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .prow .dot.dev { background: var(--amber); }
+  .prow .dot.live { background: var(--green); }
+  .prow .pname { font-weight: 700; font-size: 15px; letter-spacing: -.01em; }
+  .prow .pstack { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
+  .prow .pstat { font-family: var(--mono); font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 6px; }
+  .prow .pstat.dev { color: var(--amber); background: #fffbeb; border: 1px solid #fde68a; }
+  .prow .pstat.live { color: var(--green); background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .panel-foot {
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 11.5px; color: var(--dim);
+  }
+
+  /* ---------- 区块 ---------- */
+  .section { padding: 76px 0 8px; }
+  .sec-head { display: flex; align-items: center; gap: 16px; margin-bottom: 30px; }
+  .sec-head .idx { font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 700; }
+  .sec-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+  .sec-head .rule { flex: 1; border-top: 1px solid var(--line); }
+  .sec-head .more { font-size: 13.5px; color: var(--muted); text-decoration: none; font-family: var(--mono); }
+  .sec-head .more:hover { color: var(--accent); }
+
+  /* ---------- 项目卡 ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card {
+    position: relative;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 24px 24px 20px;
+    display: flex; flex-direction: column; overflow: hidden;
+    transition: transform .18s, border-color .18s, box-shadow .18s;
+  }
+  .card::before {
+    content: ''; position: absolute; inset: 0 0 auto; height: 2.5px;
+    background: linear-gradient(90deg, var(--accent), var(--cyan));
+    opacity: 0; transition: opacity .18s;
+  }
+  .card:hover { transform: translateY(-3px); border-color: rgba(37,99,235,.5); box-shadow: 0 14px 30px -14px rgba(37,99,235,.25); }
+  .card:hover::before { opacity: 1; }
+  .card .top { display: flex; align-items: center; justify-content: space-between; }
+  .card .idx { font-family: var(--mono); font-size: 13px; color: var(--dim); }
+  .card .status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--secondary); background: #f1f5f9; border-radius: 6px; padding: 3px 10px; }
+  .card .status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+  .card .status.live::before { background: var(--green); }
+  .card .status.dev::before { background: var(--amber); }
+  .card .name { margin-top: 14px; font-size: 19px; font-weight: 800; letter-spacing: -.01em; }
+  .card .desc { margin-top: 8px; font-size: 13.5px; color: var(--muted); flex: 1; }
+  .card .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .card .chip { font-family: var(--mono); font-size: 11.5px; color: var(--secondary); background: #f8fafc; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; }
+  .card .foot {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12px;
+  }
+  .card .foot a { text-decoration: none; color: var(--accent); font-weight: 600; }
+  .card .foot .upd { color: var(--dim); }
+
+  /* ---------- 文章 ---------- */
+  .posts { border: 1px solid var(--line); border-radius: 12px; background: var(--card); overflow: hidden; }
+  .post { display: flex; align-items: center; gap: 22px; padding: 17px 24px; text-decoration: none; color: var(--ink); transition: background .15s; }
+  .post + .post { border-top: 1px solid var(--line); }
+  .post:hover { background: var(--accent-soft); }
+  .post time { font-family: var(--mono); font-size: 12.5px; color: var(--dim); min-width: 92px; }
+  .post .title { font-size: 15px; font-weight: 600; flex: 1; }
+  .post .cat { font-family: var(--mono); font-size: 11.5px; color: var(--dim); border: 1px solid var(--line); border-radius: 6px; padding: 2px 9px; }
+  .post .arrow { color: var(--dim); transition: transform .15s, color .15s; }
+  .post:hover .arrow { transform: translateX(3px); color: var(--accent); }
+
+  /* ---------- 页脚 ---------- */
+  footer { margin-top: 92px; border-top: 1px solid var(--line); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 30px; padding: 34px 0 40px; }
+  .foot-grid h5 { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--dim); text-transform: uppercase; margin-bottom: 12px; }
+  .foot-grid p, .foot-grid a { font-size: 13.5px; color: var(--muted); text-decoration: none; display: block; line-height: 2.1; }
+  .foot-grid a:hover { color: var(--accent); }
+  .foot-bar { display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding: 18px 0 26px; font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
+
+  .rise { animation: rise .8s cubic-bezier(.16,1,.3,1) both; }
+  .rise.d1 { animation-delay: .1s; } .rise.d2 { animation-delay: .2s; } .rise.d3 { animation-delay: .3s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+  <nav class="wrap">
+    <div class="brand"><span class="mark">H</span>Harbor</div>
+    <div class="nav-links"><a href="#">项目</a><a href="#">文章</a><a href="#">关于</a></div>
+    <a class="gh-btn" href="#">GitHub ↗</a>
+  </nav>
+
+  <div class="hero">
+    <span class="cross" style="left:6%;top:18%">+</span>
+    <span class="cross" style="left:44%;top:12%">+</span>
+    <span class="cross" style="right:8%;bottom:26%">+</span>
+    <span class="watermark" aria-hidden="true">03</span>
+    <div class="wrap">
+      <div>
+        <span class="kicker rise">Portfolio · 个人站点</span>
+        <h1 class="rise d1">Leo<span class="dot">.</span></h1>
+        <p class="lead rise d2">全栈开发者。工作里做物流系统，业余做自己的小产品——记账、内容生产、学习工具。</p>
+        <div class="cta rise d3">
+          <a class="btn btn-primary" href="#">看看我做的项目 →</a>
+          <a class="btn btn-ghost" href="#">GitHub ↗</a>
+        </div>
+      </div>
+
+      <aside class="panel rise d3">
+        <div class="panel-in">
+          <div class="panel-head">
+            <span class="panel-title">harbor / projects</span>
+            <span class="panel-live">LIVE</span>
+          </div>
+          <div class="panel-body">
+            <div class="prow"><span class="dot dev"></span><span class="pname">Aurum</span><span class="pstack">go · uni-app</span><span class="pstat dev">DEV</span></div>
+            <div class="prow"><span class="dot live"></span><span class="pname">InkFlow</span><span class="pstack">java · vue3</span><span class="pstat live">LIVE</span></div>
+            <div class="prow"><span class="dot dev"></span><span class="pname">Learning Studio</span><span class="pstack">java21 · vue3</span><span class="pstat dev">DEV</span></div>
+          </div>
+          <div class="panel-foot"><span>git · github.com/leo-yuxiangchao</span><span>updated 2026-11-26</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="section">
+      <div class="sec-head"><span class="idx">01 /</span><h2>项目</h2><span class="rule"></span><a class="more" href="#">全部 →</a></div>
+      <div class="cards">
+        <div class="card">
+          <div class="top"><span class="idx">01</span><span class="status dev">开发中</span></div>
+          <div class="name">Aurum</div>
+          <p class="desc">家庭共享记账，统计可按个人 / 家庭两种口径切换</p>
+          <div class="chips"><span class="chip">Go</span><span class="chip">Gin</span><span class="chip">MySQL</span><span class="chip">uni-app</span></div>
+          <div class="foot"><a href="#">详情 →</a><span class="upd">updated 11-26</span></div>
+        </div>
+        <div class="card">
+          <div class="top"><span class="idx">02</span><span class="status live">V1 已投入使用</span></div>
+          <div class="name">InkFlow 墨流工作台</div>
+          <p class="desc">小说推文视频流水线，2 小时一条到 30 分钟一条</p>
+          <div class="chips"><span class="chip">Spring Boot</span><span class="chip">Vue 3</span><span class="chip">FFmpeg</span><span class="chip">DeepSeek</span></div>
+          <div class="foot"><a href="#">详情 →</a><span class="upd">updated 11-26</span></div>
+        </div>
+        <div class="card">
+          <div class="top"><span class="idx">03</span><span class="status dev">开发中</span></div>
+          <div class="name">Learning Studio</div>
+          <p class="desc">AI 驱动的个人学习系统</p>
+          <div class="chips"><span class="chip">Java 21</span><span class="chip">Spring Boot</span><span class="chip">Vue 3</span><span class="chip">MySQL</span></div>
+          <div class="foot"><a href="#">详情 →</a><span class="upd">updated 11-24</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sec-head"><span class="idx">02 /</span><h2>文章</h2><span class="rule"></span><a class="more" href="#">全部 →</a></div>
+      <div class="posts">
+        <a class="post" href="#"><time>2026-11-26</time><span class="title">Harbor 这个站是怎么搭的</span><span class="cat">搭建笔记</span><span class="arrow">→</span></a>
+        <a class="post" href="#"><time>2026-11-26</time><span class="title">三个业余项目的共同骨架</span><span class="cat">工程习惯</span><span class="arrow">→</span></a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="foot-grid">
+        <div>
+          <h5>Harbor</h5>
+          <p>港湾——三个业余项目停泊的地方，也是我写字的地方。用 Astro 搭建，源码在 GitHub。</p>
+        </div>
+        <div>
+          <h5>导航</h5>
+          <a href="#">项目</a><a href="#">文章</a><a href="#">关于</a>
+        </div>
+        <div>
+          <h5>联系</h5>
+          <a href="#">GitHub ↗</a><a href="#">邮箱（待补）</a>
+        </div>
+      </div>
+      <div class="foot-bar"><span>© 2026 LEO — HARBOR</span><span>BUILT WITH ASTRO · DEPLOYED ON GITHUB PAGES</span></div>
+    </footer>
+  </div>
+</body>
+</html>

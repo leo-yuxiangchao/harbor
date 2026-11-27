@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新粗野主义 · Harbor</title>
+<style>
+  :root {
+    --bg: #fff8e6;
+    --ink: #141414;
+    --yellow: #ffd02e;
+    --blue: #4d7cff;
+    --pink: #ff8fd0;
+    --green: #7ee2a8;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+    line-height: 1.6; font-size: 15px;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 28px; }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0;
+  }
+  .brand {
+    font-size: 20px; font-weight: 900;
+    background: var(--yellow); border: 3px solid var(--ink);
+    padding: 6px 16px; box-shadow: 4px 4px 0 var(--ink);
+  }
+  .nav-links a {
+    color: var(--ink); text-decoration: none; font-weight: 700; margin-left: 10px;
+    padding: 6px 14px; border: 3px solid transparent; font-size: 14.5px;
+  }
+  .nav-links a:hover { border-color: var(--ink); background: #fff; box-shadow: 3px 3px 0 var(--ink); }
+  .hero {
+    margin-top: 34px;
+    border: 3px solid var(--ink); background: #fff;
+    box-shadow: 8px 8px 0 var(--ink);
+    padding: 52px 48px;
+  }
+  .eyebrow {
+    display: inline-block; font-size: 13px; font-weight: 700;
+    background: var(--pink); border: 2px solid var(--ink);
+    padding: 3px 12px; box-shadow: 3px 3px 0 var(--ink);
+  }
+  h1 { font-size: 96px; font-weight: 900; letter-spacing: -.03em; line-height: 1; margin-top: 22px; }
+  h1 span { color: var(--blue); }
+  .lead { margin-top: 22px; font-size: 17.5px; font-weight: 500; max-width: 30em; }
+  .cta { margin-top: 34px; display: flex; gap: 16px; }
+  .btn {
+    font-weight: 800; font-size: 15px; text-decoration: none; color: var(--ink);
+    border: 3px solid var(--ink); padding: 12px 26px;
+    box-shadow: 5px 5px 0 var(--ink);
+    transition: transform .1s, box-shadow .1s;
+  }
+  .btn:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--ink); }
+  .btn:active { transform: translate(5px, 5px); box-shadow: 0 0 0 var(--ink); }
+  .btn.main { background: var(--blue); color: #fff; }
+  .btn.ghost { background: #fff; }
+  .sec-title { display: flex; align-items: center; gap: 14px; margin: 60px 0 24px; }
+  h2 {
+    font-size: 30px; font-weight: 900;
+    background: var(--green); border: 3px solid var(--ink);
+    padding: 4px 18px; box-shadow: 4px 4px 0 var(--ink);
+  }
+  .sec-more { font-weight: 700; color: var(--ink); }
+  .cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 22px; }
+  .card {
+    border: 3px solid var(--ink); background: #fff;
+    box-shadow: 6px 6px 0 var(--ink); padding: 22px;
+    display: flex; flex-direction: column; min-height: 210px;
+  }
+  .card .tag {
+    align-self: flex-start; font-size: 12px; font-weight: 800;
+    border: 2px solid var(--ink); padding: 2px 10px; margin-bottom: 12px;
+  }
+  .card:nth-child(1) .tag { background: var(--yellow); }
+  .card:nth-child(2) .tag { background: var(--green); }
+  .card:nth-child(3) .tag { background: var(--pink); }
+  .card .name { font-size: 21px; font-weight: 900; }
+  .card .desc { font-size: 13.5px; margin-top: 8px; flex: 1; }
+  .card .meta { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 700; margin-top: 14px; border-top: 2px dashed var(--ink); padding-top: 10px; }
+  .post {
+    display: flex; align-items: center; gap: 18px;
+    border: 3px solid var(--ink); background: #fff;
+    box-shadow: 5px 5px 0 var(--ink);
+    padding: 16px 22px; margin-bottom: 14px;
+  }
+  .post:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--ink); }
+  .post time { font-size: 13px; font-weight: 800; background: var(--yellow); border: 2px solid var(--ink); padding: 2px 8px; }
+  .post a { color: var(--ink); font-weight: 800; font-size: 16px; text-decoration: none; }
+  footer {
+    margin: 70px 0 44px; text-align: center;
+    font-weight: 700; font-size: 13.5px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="brand">HARBOR ⚓</div>
+    <div class="nav-links"><a href="#">项目</a><a href="#">文章</a><a href="#">关于</a></div>
+  </nav>
+  <div class="hero">
+    <span class="eyebrow">你好，我是</span>
+    <h1>LEO<span>.</span></h1>
+    <p class="lead">全栈开发者。工作里做物流系统，业余做自己的小产品——记账、内容生产、学习工具。</p>
+    <div class="cta">
+      <a class="btn main" href="#">看项目 →</a>
+      <a class="btn ghost" href="#">GitHub ↗</a>
+    </div>
+  </div>
+  <div class="sec-title"><h2>项目</h2><a class="sec-more" href="#">全部 →</a></div>
+  <div class="cards">
+    <div class="card"><span class="tag">开发中</span><span class="name">Aurum</span><p class="desc">家庭共享记账，统计可按个人 / 家庭两种口径切换</p><div class="meta"><span>Go · uni-app</span><span>详情 →</span></div></div>
+    <div class="card"><span class="tag">已投入使用</span><span class="name">InkFlow</span><p class="desc">小说推文视频流水线，2 小时一条到 30 分钟一条</p><div class="meta"><span>Java · Vue</span><span>详情 →</span></div></div>
+    <div class="card"><span class="tag">开发中</span><span class="name">Learning Studio</span><p class="desc">AI 驱动的个人学习系统</p><div class="meta"><span>Java 21 · Vue 3</span><span>详情 →</span></div></div>
+  </div>
+  <div class="sec-title"><h2>文章</h2><a class="sec-more" href="#">全部 →</a></div>
+  <div class="post"><time>11-26</time><a href="#">Harbor 这个站是怎么搭的</a></div>
+  <div class="post"><time>11-26</time><a href="#">三个业余项目的共同骨架</a></div>
+  <footer>© 2026 LEO · HARBOR · BUILT WITH ASTRO</footer>
+</div>
+</body>
+</html>

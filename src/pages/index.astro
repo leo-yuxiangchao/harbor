@@ -1,0 +1,247 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const latest = projects.map((p) => p.data.updated).sort().at(-1);
+const count = String(projects.length).padStart(2, '0');
+const isLive = (s: string) => s.includes('已投入使用');
+---
+
+<Base title="首页">
+  <section class="hero">
+    <span class="cross" style="left:6%;top:18%">+</span>
+    <span class="cross" style="left:44%;top:10%">+</span>
+    <span class="cross" style="right:6%;bottom:24%">+</span>
+    <span class="watermark" aria-hidden="true">{count}</span>
+    <div class="container hero-grid reveal">
+      <div>
+        <span class="kicker">Portfolio · 个人站点</span>
+        <h1>Leo<span class="dot">.</span></h1>
+        <p class="lead">技术爱好者。折腾能用在自家生活里的小软件，把生活一点点智能化——记账、内容生产、学习工具。</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="/projects/">看看我做的项目 →</a>
+          <a class="btn btn-ghost" href="https://github.com/leo-yuxiangchao" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </div>
+
+      <aside class="panel" aria-label="项目状态">
+        <div class="panel-in">
+          <div class="panel-head">
+            <span class="panel-title">harbor / projects</span>
+            <span class="panel-live">LIVE</span>
+          </div>
+          <div class="panel-body">
+            {projects.map((p) => (
+              <a class="prow" href={`/projects/${p.id}/`}>
+                <span class:list={['dot', isLive(p.data.status) ? 'live' : 'dev']}></span>
+                <span class="pname">{p.data.title}</span>
+                <span class="pstack">{p.data.tech.slice(0, 2).join(' · ').toLowerCase()}</span>
+                <span class:list={['pstat', isLive(p.data.status) ? 'live' : 'dev']}>
+                  {isLive(p.data.status) ? 'LIVE' : 'DEV'}
+                </span>
+              </a>
+            ))}
+          </div>
+          <div class="panel-foot">
+            <span>git · github.com/leo-yuxiangchao</span>
+            <span>updated {latest}</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="section reveal">
+      <div class="sec-head">
+        <span class="idx">01 /</span><h2>项目</h2><span class="rule"></span><a class="more" href="/projects/">全部 →</a>
+      </div>
+      <div class="cards">
+        {projects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="sec-head">
+        <span class="idx">02 /</span><h2>文章</h2><span class="rule"></span><a class="more" href="/blog/">全部 →</a>
+      </div>
+      <div class="posts">
+        {posts.map((p) => (
+          <a class="post" href={`/blog/${p.id}/`}>
+            <time>{fmt(p.data.date)}</time>
+            <span class="title">{p.data.title}</span>
+            {p.data.category && <span class="cat">{p.data.category}</span>}
+            <span class="arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    padding: 96px 0 88px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, var(--dot-grid) 1.1px, transparent 1.1px);
+    background-size: 26px 26px;
+    -webkit-mask-image: linear-gradient(160deg, rgba(0,0,0,.6) 20%, rgba(0,0,0,.1) 65%, transparent 85%);
+            mask-image: linear-gradient(160deg, rgba(0,0,0,.6) 20%, rgba(0,0,0,.1) 65%, transparent 85%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; right: -180px; top: -220px;
+    width: 560px; height: 560px;
+    background: var(--glow);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .cross {
+    position: absolute;
+    font-family: var(--font-mono);
+    color: var(--line-strong);
+    font-size: 15px;
+    pointer-events: none;
+  }
+  .watermark {
+    position: absolute; right: 24px; bottom: -58px;
+    font-family: var(--font-mono);
+    font-size: 300px; font-weight: 800; line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.2px var(--watermark);
+    pointer-events: none; user-select: none;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .12em;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .kicker::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cyan);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(6,182,212,.4); }
+    50% { opacity: .55; box-shadow: 0 0 0 6px rgba(6,182,212,0); }
+  }
+  h1 {
+    margin: 22px 0 0;
+    font-size: clamp(64px, 9vw, 104px);
+    font-weight: 800; letter-spacing: -.045em; line-height: 1;
+  }
+  .dot {
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+  .lead { margin: 26px 0 0; max-width: 30em; font-size: 17.5px; color: var(--secondary); }
+  .cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+
+  .panel {
+    border-radius: 16px; padding: 1.5px;
+    background: var(--panel-border);
+    box-shadow: var(--panel-shadow);
+  }
+  .panel-in { background: var(--card); border-radius: 14.5px; padding: 22px 24px; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; }
+  .panel-title {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em;
+    color: var(--dim); text-transform: uppercase;
+  }
+  .panel-live {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: var(--green);
+  }
+  .panel-live::before {
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  .panel-body { margin-top: 18px; }
+  .prow {
+    display: grid;
+    grid-template-columns: 10px 1fr auto auto;
+    gap: 12px; align-items: center;
+    padding: 13px 4px;
+    text-decoration: none;
+    color: var(--ink);
+    border-radius: 8px;
+  }
+  .prow + .prow { border-top: 1px dashed var(--line); }
+  .prow:hover .pname { color: var(--accent); }
+  .prow .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .prow .dot.dev { background: var(--amber); }
+  .prow .dot.live { background: var(--green); }
+  .pname { font-weight: 700; font-size: 15px; letter-spacing: -.01em; }
+  .pstack { font-family: var(--font-mono); font-size: 11.5px; color: var(--dim); }
+  .pstat { font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 6px; }
+  .pstat.dev { color: var(--amber); background: var(--dev-bg); border: 1px solid var(--dev-border); }
+  .pstat.live { color: var(--green); background: var(--live-bg); border: 1px solid var(--live-border); }
+  .panel-foot {
+    margin-top: 16px; padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 10px;
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--dim);
+  }
+
+  .section { padding: 76px 0 8px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+  .posts {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--card); overflow: hidden;
+  }
+  .post {
+    display: flex; align-items: center; gap: 22px;
+    padding: 17px 24px;
+    color: var(--ink); text-decoration: none;
+    transition: background .15s;
+  }
+  .post + .post { border-top: 1px solid var(--line); }
+  .post:hover { background: var(--accent-soft); }
+  .post time {
+    font-family: var(--font-mono); font-size: 12.5px;
+    color: var(--dim); min-width: 92px;
+    font-variant-numeric: tabular-nums;
+  }
+  .post .title { font-size: 15px; font-weight: 600; flex: 1; }
+  .cat {
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--dim);
+    border: 1px solid var(--line); border-radius: 6px; padding: 2px 9px;
+  }
+  .arrow { color: var(--dim); transition: transform .15s, color .15s; }
+  .post:hover .arrow { transform: translateX(3px); color: var(--accent); }
+
+  @media (max-width: 900px) {
+    .hero { padding: 64px 0 72px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 44px; }
+    .watermark { font-size: 200px; bottom: auto; top: -40px; right: 0; }
+    .cards { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .post { gap: 12px; padding: 15px 16px; }
+    .post .cat { display: none; }
+    .pstack { display: none; }
+    .prow { grid-template-columns: 10px 1fr auto; }
+    .panel-foot span:first-child { display: none; }
+  }
+</style>

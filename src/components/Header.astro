@@ -1,0 +1,114 @@
+---
+const path = Astro.url.pathname;
+const links = [
+  { href: '/projects/', label: '项目' },
+  { href: '/blog/', label: '文章' },
+  { href: '/about/', label: '关于' },
+];
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a href="/" class="brand" aria-label="Harbor 首页">
+      <span class="mark">H</span>
+      <span class="word">Harbor</span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      {links.map((l) => (
+        <a href={l.href} class:list={[{ active: path.startsWith(l.href) }]}>{l.label}</a>
+      ))}
+    </nav>
+    <div class="actions">
+      <a class="gh-btn" href="https://github.com/leo-yuxiangchao" target="_blank" rel="noopener">
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="切换明暗主题">
+        <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8" />
+          <path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"
+            stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+        <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"
+            stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: 64px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    display: grid; place-items: center;
+    color: #fff; font-size: 13px; font-weight: 800;
+  }
+  .word { font-weight: 800; font-size: 17px; letter-spacing: -.01em; }
+  .nav { display: flex; gap: 4px; margin-left: auto; }
+  .nav a {
+    color: var(--muted);
+    font-size: 14px;
+    padding: 6px 13px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: color .15s, background .15s;
+  }
+  .nav a:hover { color: var(--ink); background: var(--nav-hover); }
+  .nav a.active { color: var(--ink); font-weight: 600; background: var(--nav-hover); }
+  .actions { display: flex; align-items: center; gap: 10px; }
+  .gh-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13.5px; font-weight: 600; color: var(--ink);
+    text-decoration: none; padding: 7px 16px;
+    border: 1px solid var(--line-strong); border-radius: 8px;
+    background: var(--card);
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .gh-btn:hover { border-color: var(--ink); box-shadow: 0 2px 8px rgba(15, 23, 42, .08); }
+  .icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--line-strong);
+    background: var(--card);
+    color: var(--muted);
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+  }
+  .icon-btn:hover { color: var(--ink); border-color: var(--ink); }
+  :global(:root[data-theme='light']) .icon-sun { display: none; }
+  :global(:root[data-theme='dark']) .icon-moon { display: none; }
+
+  @media (max-width: 640px) {
+    .bar { gap: 14px; height: 58px; }
+    .gh-btn { display: none; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>

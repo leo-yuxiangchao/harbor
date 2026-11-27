@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>清新科技 · Harbor</title>
+<style>
+  :root {
+    --bg: #f7fafc;
+    --card: #ffffff;
+    --ink: #0f172a;
+    --secondary: #334155;
+    --muted: #64748b;
+    --dim: #94a3b8;
+    --line: #e2e8f0;
+    --line-strong: #cbd5e1;
+    --accent: #2563eb;
+    --accent-soft: #eff6ff;
+    --cyan: #06b6d4;
+    --mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    font-size: 15px; line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- 导航 ---------- */
+  nav {
+    display: flex; align-items: center; gap: 32px;
+    height: 64px; border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 17px; letter-spacing: -.01em;
+  }
+  .brand .mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    display: grid; place-items: center;
+    color: #fff; font-size: 13px; font-weight: 800;
+  }
+  .nav-links { display: flex; gap: 4px; margin-left: auto; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 14px;
+    padding: 6px 13px; border-radius: 8px;
+    transition: color .15s, background .15s;
+  }
+  .nav-links a:hover { color: var(--ink); background: #eef2f7; }
+  .gh-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13.5px; font-weight: 600; color: var(--ink);
+    text-decoration: none; padding: 7px 16px;
+    border: 1px solid var(--line-strong); border-radius: 8px;
+    background: var(--card);
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .gh-btn:hover { border-color: var(--ink); box-shadow: 0 2px 8px rgba(15,23,42,.08); }
+
+  /* ---------- 首屏 ---------- */
+  .hero { position: relative; padding: 110px 0 96px; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(circle, var(--line-strong) 1px, transparent 1px);
+    background-size: 26px 26px;
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.08) 70%, transparent);
+            mask-image: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.08) 70%, transparent);
+  }
+  .hero .wrap { position: relative; }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .kicker::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cyan);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(6,182,212,.4); } 50% { opacity: .55; box-shadow: 0 0 0 6px rgba(6,182,212,0); } }
+  h1 {
+    margin-top: 22px;
+    font-size: 108px; font-weight: 800; letter-spacing: -.045em; line-height: 1;
+  }
+  h1 .dot { color: var(--accent); }
+  .lead {
+    margin-top: 26px; max-width: 33em;
+    font-size: 17.5px; color: var(--secondary);
+  }
+  .cta { display: flex; gap: 14px; margin-top: 40px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14.5px; font-weight: 600; text-decoration: none;
+    padding: 12px 26px; border-radius: 10px;
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    box-shadow: 0 6px 16px -6px rgba(37,99,235,.45);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -6px rgba(37,99,235,.5); }
+  .btn-ghost { background: var(--card); color: var(--ink); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+  .stats {
+    display: flex; gap: 0; margin-top: 64px;
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--card); overflow: hidden;
+    max-width: 560px;
+  }
+  .stat { flex: 1; padding: 16px 22px; }
+  .stat + .stat { border-left: 1px solid var(--line); }
+  .stat .num { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--ink); }
+  .stat .num em { font-style: normal; color: var(--accent); font-size: 15px; }
+  .stat .label { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  /* ---------- 区块 ---------- */
+  .section { padding: 72px 0 8px; }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 28px; }
+  .sec-head .idx { font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 700; }
+  .sec-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+  .sec-head .more { margin-left: auto; font-size: 13.5px; color: var(--muted); text-decoration: none; }
+  .sec-head .more:hover { color: var(--accent); }
+
+  /* ---------- 项目卡 ---------- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 24px 24px 20px;
+    display: flex; flex-direction: column;
+    transition: transform .18s, border-color .18s, box-shadow .18s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 28px -12px rgba(37,99,235,.22);
+  }
+  .card .top { display: flex; align-items: center; justify-content: space-between; }
+  .card .idx { font-family: var(--mono); font-size: 13px; color: var(--dim); }
+  .card .status {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: var(--secondary);
+    background: #f1f5f9; border-radius: 6px; padding: 3px 10px;
+  }
+  .card .status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+  .card .status.live::before { background: #16a34a; }
+  .card .status.dev::before { background: #f59e0b; }
+  .card .name { margin-top: 14px; font-size: 19px; font-weight: 800; letter-spacing: -.01em; }
+  .card .desc { margin-top: 8px; font-size: 13.5px; color: var(--muted); flex: 1; }
+  .card .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .card .chip {
+    font-family: var(--mono); font-size: 11.5px; color: var(--secondary);
+    background: #f8fafc; border: 1px solid var(--line);
+    border-radius: 6px; padding: 2px 8px;
+  }
+  .card .foot {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12.5px;
+  }
+  .card .foot a { text-decoration: none; color: var(--accent); font-weight: 600; }
+  .card .foot a.gh { color: var(--dim); }
+  .card .foot a.gh:hover { color: var(--ink); }
+
+  /* ---------- 文章 ---------- */
+  .posts { border: 1px solid var(--line); border-radius: 12px; background: var(--card); overflow: hidden; }
+  .post {
+    display: flex; align-items: center; gap: 22px;
+    padding: 17px 24px;
+    text-decoration: none; color: var(--ink);
+    transition: background .15s;
+  }
+  .post + .post { border-top: 1px solid var(--line); }
+  .post:hover { background: var(--accent-soft); }
+  .post time { font-family: var(--mono); font-size: 12.5px; color: var(--dim); min-width: 92px; }
+  .post .title { font-size: 15px; font-weight: 600; flex: 1; }
+  .post .arrow { color: var(--dim); transition: transform .15s, color .15s; }
+  .post:hover .arrow { transform: translateX(3px); color: var(--accent); }
+
+  /* ---------- 页脚 ---------- */
+  footer {
+    margin-top: 88px; border-top: 1px solid var(--line);
+    padding: 26px 0 34px;
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 12px; color: var(--dim);
+  }
+
+  .rise { animation: rise .8s cubic-bezier(.16,1,.3,1) both; }
+  .rise.d1 { animation-delay: .1s; } .rise.d2 { animation-delay: .2s; } .rise.d3 { animation-delay: .3s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+  <nav class="wrap">
+    <div class="brand"><span class="mark">H</span>Harbor</div>
+    <div class="nav-links"><a href="#">项目</a><a href="#">文章</a><a href="#">关于</a></div>
+    <a class="gh-btn" href="#">GitHub ↗</a>
+  </nav>
+
+  <div class="hero">
+    <div class="wrap">
+      <span class="kicker rise">Portfolio · 个人站点</span>
+      <h1 class="rise d1">Leo<span class="dot">.</span></h1>
+      <p class="lead rise d2">全栈开发者。工作里做物流系统，业余做自己的小产品——记账、内容生产、学习工具。</p>
+      <div class="cta rise d3">
+        <a class="btn btn-primary" href="#">看看我做的项目 →</a>
+        <a class="btn btn-ghost" href="#">GitHub ↗</a>
+      </div>
+      <div class="stats rise d3">
+        <div class="stat"><div class="num">03</div><div class="label">开源项目</div></div>
+        <div class="stat"><div class="num">01</div><div class="label">已投入使用</div></div>
+        <div class="stat"><div class="num">∞<em>&nbsp;</em></div><div class="label">折腾中</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="section">
+      <div class="sec-head"><span class="idx">01 /</span><h2>项目</h2><a class="more" href="#">全部 →</a></div>
+      <div class="cards">
+        <div class="card">
+          <div class="top"><span class="idx">01</span><span class="status dev">开发中</span></div>
+          <div class="name">Aurum</div>
+          <p class="desc">家庭共享记账，统计可按个人 / 家庭两种口径切换</p>
+          <div class="chips"><span class="chip">Go</span><span class="chip">Gin</span><span class="chip">MySQL</span><span class="chip">uni-app</span></div>
+          <div class="foot"><a href="#">详情 →</a><a class="gh" href="#">github ↗</a></div>
+        </div>
+        <div class="card">
+          <div class="top"><span class="idx">02</span><span class="status live">V1 已投入使用</span></div>
+          <div class="name">InkFlow 墨流工作台</div>
+          <p class="desc">小说推文视频流水线，2 小时一条到 30 分钟一条</p>
+          <div class="chips"><span class="chip">Spring Boot</span><span class="chip">Vue 3</span><span class="chip">FFmpeg</span><span class="chip">DeepSeek</span></div>
+          <div class="foot"><a href="#">详情 →</a><a class="gh" href="#">github ↗</a></div>
+        </div>
+        <div class="card">
+          <div class="top"><span class="idx">03</span><span class="status dev">开发中</span></div>
+          <div class="name">Learning Studio</div>
+          <p class="desc">AI 驱动的个人学习系统</p>
+          <div class="chips"><span class="chip">Java 21</span><span class="chip">Spring Boot</span><span class="chip">Vue 3</span><span class="chip">MySQL</span></div>
+          <div class="foot"><a href="#">详情 →</a><a class="gh" href="#">github ↗</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sec-head"><span class="idx">02 /</span><h2>文章</h2><a class="more" href="#">全部 →</a></div>
+      <div class="posts">
+        <a class="post" href="#"><time>2026-11-26</time><span class="title">Harbor 这个站是怎么搭的</span><span class="arrow">→</span></a>
+        <a class="post" href="#"><time>2026-11-26</time><span class="title">三个业余项目的共同骨架</span><span class="arrow">→</span></a>
+      </div>
+    </section>
+
+    <footer><span>© 2026 LEO — HARBOR</span><span>BUILT WITH ASTRO</span></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>编辑杂志风 v2 · Harbor</title>
+<style>
+  :root {
+    --paper: #f6f2e9;
+    --paper-deep: #efe9db;
+    --ink: #191510;
+    --ink-soft: #3a342a;
+    --muted: #7d7462;
+    --accent: #b3402a;
+    --gold: #9c7a33;
+    --rule: #d9d0bc;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,.55), transparent 55%),
+      var(--paper);
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', SimSun, serif;
+    line-height: 1.9; font-size: 16px;
+    overflow-x: hidden;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 40px; position: relative; }
+
+  /* ---------- 刊头 ---------- */
+  .masthead { padding: 34px 0 0; }
+  .mast-top {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding-bottom: 16px;
+  }
+  .mast-brand { font-size: 15px; letter-spacing: .42em; color: var(--muted); }
+  .mast-brand b { color: var(--ink); }
+  .mast-name { font-size: 54px; font-weight: 900; letter-spacing: .04em; line-height: 1; }
+  .mast-name em { font-style: italic; color: var(--accent); }
+  .mast-issue { text-align: right; font-size: 12px; color: var(--muted); letter-spacing: .18em; line-height: 2; }
+  .mast-issue b { color: var(--gold); font-weight: 700; }
+  .mast-rules { border-top: 3px solid var(--ink); }
+  .mast-rules::after { content: ''; display: block; border-top: 1px solid var(--ink); margin-top: 3px; }
+  .mast-sub {
+    display: flex; justify-content: space-between;
+    font-size: 12.5px; letter-spacing: .2em; color: var(--muted);
+    padding: 10px 2px 0;
+  }
+
+  /* ---------- 首屏 ---------- */
+  .hero { position: relative; padding: 96px 0 88px; border-bottom: 1px solid var(--rule); }
+  .ghost {
+    position: absolute; right: -60px; top: 50%; transform: translateY(-52%);
+    font-family: 'Kaiti SC', KaiTi, STKaiti, serif;
+    font-size: 560px; line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(25, 21, 16, .09);
+    user-select: none; pointer-events: none;
+  }
+  .hero .eyebrow { display: flex; align-items: center; gap: 16px; font-size: 13.5px; letter-spacing: .34em; color: var(--muted); }
+  .hero .eyebrow::before { content: ''; width: 46px; border-top: 1px solid var(--accent); }
+  h1 {
+    font-size: 164px; font-weight: 900; line-height: .98; letter-spacing: .01em;
+    margin-top: 30px;
+  }
+  h1 .dot { color: var(--accent); font-style: italic; }
+  .lead {
+    margin-top: 34px; max-width: 27em;
+    font-size: 18.5px; color: var(--ink-soft);
+  }
+  .lead::first-letter {
+    font-size: 3.2em; font-weight: 900; color: var(--accent);
+    float: left; line-height: .85; padding-right: 12px; padding-top: 4px;
+  }
+  .cta { margin-top: 42px; display: flex; align-items: center; gap: 28px; }
+  .btn-main {
+    font-family: inherit; font-size: 15px; letter-spacing: .3em;
+    background: var(--ink); color: var(--paper); border: 1px solid var(--ink);
+    padding: 14px 34px 14px 40px; cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .btn-main:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-text { font-size: 15px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 3px; letter-spacing: .06em; }
+  .btn-text:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- 目次 ---------- */
+  .toc { padding: 76px 0 84px; border-bottom: 1px solid var(--rule); }
+  .toc-head { display: flex; align-items: baseline; gap: 22px; margin-bottom: 40px; }
+  .toc-head h2 { font-size: 40px; font-weight: 900; letter-spacing: .06em; }
+  .toc-head .en { font-size: 13px; letter-spacing: .34em; color: var(--muted); text-transform: uppercase; }
+  .toc-head .more { margin-left: auto; font-size: 13.5px; color: var(--muted); text-decoration: none; }
+  .toc-row {
+    display: flex; align-items: baseline; gap: 20px;
+    padding: 24px 0; border-bottom: 1px solid var(--rule);
+  }
+  .toc-row:first-of-type { border-top: 1px solid var(--rule); }
+  .toc-row .no { font-size: 15px; font-weight: 700; color: var(--accent); font-style: italic; min-width: 36px; }
+  .toc-row .name { font-size: 26px; font-weight: 900; letter-spacing: .02em; }
+  .toc-row .name small { font-size: 13px; font-weight: 400; color: var(--muted); letter-spacing: .1em; margin-left: 14px; }
+  .toc-row .dots { flex: 1; border-bottom: 2px dotted var(--rule); transform: translateY(-6px); min-width: 40px; }
+  .toc-row .tech { font-size: 13.5px; color: var(--muted); letter-spacing: .06em; }
+  .toc-row .page { font-size: 13.5px; color: var(--gold); font-weight: 700; letter-spacing: .1em; min-width: 44px; text-align: right; }
+  .toc-desc { font-size: 14.5px; color: #57503f; margin: -14px 0 6px 56px; }
+
+  /* ---------- 文章 ---------- */
+  .posts { padding: 76px 0 84px; border-bottom: 1px solid var(--rule); }
+  .post-row {
+    display: flex; align-items: baseline; gap: 22px;
+    padding: 20px 0; border-bottom: 1px solid var(--rule);
+  }
+  .post-row:first-of-type { border-top: 1px solid var(--rule); }
+  .post-row time { font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 100px; }
+  .post-row a { color: var(--ink); font-size: 19px; font-weight: 700; text-decoration: none; letter-spacing: .02em; }
+  .post-row a:hover { color: var(--accent); }
+  .post-row .tag { margin-left: auto; font-size: 12.5px; color: var(--gold); letter-spacing: .14em; }
+
+  /* ---------- 版权页 ---------- */
+  .colophon {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px; padding: 44px 0 54px;
+    font-size: 13px; color: var(--muted); line-height: 2.1;
+  }
+  .colophon h4 { font-size: 12px; letter-spacing: .3em; color: var(--ink); margin-bottom: 10px; }
+  .colophon a { color: var(--muted); }
+
+  /* ---------- 入场动效(静态截图只能看到终态) ---------- */
+  .rise { animation: rise .9s cubic-bezier(.16,1,.3,1) both; }
+  .rise.d1 { animation-delay: .12s; } .rise.d2 { animation-delay: .24s; }
+  .rise.d3 { animation-delay: .36s; } .rise.d4 { animation-delay: .48s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  .ghost { animation: ghost-in 1.6s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes ghost-in { from { opacity: 0; transform: translateY(-52%) translateX(60px); } to { opacity: 1; transform: translateY(-52%); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 刊头 -->
+  <header class="masthead">
+    <div class="mast-top">
+      <div>
+        <div class="mast-brand">个 人 站 点 <b>·</b> PERSONAL SITE</div>
+        <div class="mast-name" style="margin-top:14px">Harbor<em>.</em></div>
+      </div>
+      <div class="mast-issue">
+        <div>VOL. 2026 &nbsp;·&nbsp; NO. 001</div>
+        <div>港湾 <b>·</b> 项目与文字</div>
+      </div>
+    </div>
+    <div class="mast-rules"></div>
+    <div class="mast-sub"><span>LEO YU &nbsp;主编 · 主笔 · 主程</span><span>甲辰年冬 &nbsp;首刊</span></div>
+  </header>
+
+  <!-- 首屏 -->
+  <section class="hero">
+    <span class="ghost" aria-hidden="true">港</span>
+    <p class="eyebrow rise">你好，我是</p>
+    <h1 class="rise d1">Leo<span class="dot">.</span></h1>
+    <p class="lead rise d2">全栈开发者。工作里做物流系统，业余做自己的小产品——记账、内容生产、学习工具。</p>
+    <div class="cta rise d3">
+      <button class="btn-main">观 项 目</button>
+      <a class="btn-text" href="#">GitHub →</a>
+    </div>
+  </section>
+
+  <!-- 目次 -->
+  <section class="toc">
+    <div class="toc-head">
+      <h2>目次</h2><span class="en">Contents</span>
+      <a class="more" href="#">全部 →</a>
+    </div>
+    <div class="toc-row"><span class="no">01</span><span class="name">Aurum<small>开发中</small></span><span class="dots"></span><span class="tech">Go · uni-app</span><span class="page">P.01</span></div>
+    <p class="toc-desc">家庭共享记账，统计可按个人 / 家庭两种口径切换。</p>
+    <div class="toc-row"><span class="no">02</span><span class="name">InkFlow 墨流工作台<small>V1 已投入使用</small></span><span class="dots"></span><span class="tech">Java · Vue</span><span class="page">P.02</span></div>
+    <p class="toc-desc">小说推文视频流水线，2 小时一条到 30 分钟一条。</p>
+    <div class="toc-row"><span class="no">03</span><span class="name">Learning Studio<small>开发中</small></span><span class="dots"></span><span class="tech">Java 21 · Vue 3</span><span class="page">P.03</span></div>
+    <p class="toc-desc">AI 驱动的个人学习系统。</p>
+  </section>
+
+  <!-- 文章 -->
+  <section class="posts">
+    <div class="toc-head">
+      <h2>专栏</h2><span class="en">Writing</span>
+      <a class="more" href="#">全部 →</a>
+    </div>
+    <div class="post-row"><time>2026-11-26</time><a href="#">Harbor 这个站是怎么搭的</a><span class="tag">搭建笔记</span></div>
+    <div class="post-row"><time>2026-11-26</time><a href="#">三个业余项目的共同骨架</a><span class="tag">工程习惯</span></div>
+  </section>
+
+  <!-- 版权页 -->
+  <footer class="colophon">
+    <div><h4>刊 名</h4>Harbor · 港湾<br>个人站点，首刊于 2026 年冬</div>
+    <div><h4>联 系</h4>GitHub — leo-yuxiangchao<br>邮箱（待补）</div>
+    <div><h4>版 权</h4>© 2026 Leo<br>用 Astro 排版印刷</div>
+  </footer>
+
+</div>
+</body>
+</html>
