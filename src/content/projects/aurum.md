@@ -5,6 +5,7 @@ description: 以家庭为单位的记账应用：成员各自记账，统计一�
 status: 已投入使用
 tech: [Go, Gin, GORM, MySQL 8, uni-app, Vue 3, TypeScript]
 github: https://github.com/leo-yuxiangchao/aurum
+url: https://aurum.xcyu.work
 updated: '2026-11-26'
 order: 1
 ---

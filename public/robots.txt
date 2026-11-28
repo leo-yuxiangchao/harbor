@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://leo-yuxiangchao.github.io/harbor/sitemap-index.xml
+Sitemap: https://harbor.xcyu.work/sitemap-index.xml

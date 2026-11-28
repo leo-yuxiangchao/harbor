@@ -10,8 +10,7 @@ const posts = (await getCollection('blog'))
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 const latest = projects.map((p) => p.data.updated).sort().at(-1);
 const count = String(projects.length).padStart(2, '0');
-const isLive = (s: string) => s.includes('已投入使用');
----
+const isLive = (s: string) => s.includes('已投入使用');---
 
 <Base title="首页">
   <section class="hero">
@@ -23,7 +22,7 @@ const isLive = (s: string) => s.includes('已投入使用');
       <div>
         <span class="kicker">Portfolio · 个人站点</span>
         <h1>Leo<span class="dot">.</span></h1>
-        <p class="lead">技术爱好者。折腾能用在自家生活里的小软件，把生活一点点智能化——记账、内容生产、学习工具。</p>
+        <p class="lead">技术爱好者。折腾能用在自家生活里的小软件，把生活一点点智能化——记账、内容生产、学习工具、刷题题库。</p>
         <div class="cta">
           <a class="btn btn-primary" href="/projects/">看看我做的项目 →</a>
           <a class="btn btn-ghost" href="https://github.com/leo-yuxiangchao" target="_blank" rel="noopener">GitHub ↗</a>

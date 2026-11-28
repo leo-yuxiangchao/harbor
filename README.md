@@ -93,7 +93,7 @@ NODE_PATH='E:\gitWork\study\learning-studio\lumen\node_modules' node scripts/scr
 
 ## 部署
 
-计划 GitHub Pages + GitHub Actions 自动构建，未配置。配好后把 `astro.config.mjs` 的 `site` 占位域名改成真实域名。
+已上线：GitHub Pages + GitHub Actions（`.github/workflows/deploy.yml`），push main 自动构建发布，自定义域名 `harbor.xcyu.work`（`public/CNAME`）。`astro.config.mjs` 的 `site` 已指向正式域名——RSS、sitemap、OG 卡片、canonical 都以它为准。换域名时改三处：`astro.config.mjs`、`public/CNAME`、`public/robots.txt`。
 
 ## 占位待替换
 

@@ -12,7 +12,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
       <div class="sec-head" style="margin-bottom:14px">
         <span class="idx">01 /</span><h2 style="font-size:clamp(2rem,5vw,2.8rem)">项目</h2><span class="rule"></span>
       </div>
-      <p class="desc">业余做的三个小产品，都在 GitHub 上开源。</p>
+      <p class="desc">业余做的四个小产品，都在 GitHub 上开源。</p>
     </section>
     <div class="cards reveal">
       {projects.map((p) => <ProjectCard project={p} showDescription />)}

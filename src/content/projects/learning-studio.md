@@ -5,6 +5,7 @@ description: AI 三阶段建课、对话式学习、结构化评价与认知状�
 status: 已投入使用
 tech: [Java 21, Spring Boot 3, MyBatis-Plus, MySQL 8, Vue 3, Element Plus, Pinia]
 github: https://github.com/leo-yuxiangchao/learning-studio
+url: https://learn.xcyu.work
 updated: '2026-11-24'
 order: 3
 ---

@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
-const { title, tagline, status, tech, github } = project.data;
+const { title, tagline, status, tech, github, url } = project.data;
 const isLive = status.includes('已投入使用');
 ---
 
@@ -30,7 +30,8 @@ const isLive = status.includes('已投入使用');
           {tech.map((t) => <span class="chip">{t}</span>)}
         </div>
         <div class="links">
-          <a class="btn btn-primary" href={github} target="_blank" rel="noopener">在 GitHub 查看 ↗</a>
+          {url && <a class="btn btn-primary" href={url} target="_blank" rel="noopener">在线体验 ↗</a>}
+          <a class="btn btn-ghost" href={github} target="_blank" rel="noopener">GitHub ↗</a>
         </div>
       </header>
       <div class="prose">
@@ -54,6 +55,6 @@ const isLive = status.includes('已投入使用');
   h1 { margin: 0; font-size: clamp(1.9rem, 5vw, 2.6rem); font-weight: 800; letter-spacing: -.025em; }
   .tagline { margin: 14px 0 0; font-size: 17px; color: var(--secondary); line-height: 1.8; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
-  .links { margin-top: 28px; }
+  .links { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; }
   .prose { margin-top: 44px; }
 </style>
