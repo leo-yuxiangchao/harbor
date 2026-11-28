@@ -36,16 +36,21 @@ const isLive = (s: string) => s.includes('已投入使用');---
             <span class="panel-live">LIVE</span>
           </div>
           <div class="panel-body">
-            {projects.map((p) => (
-              <a class="prow" href={`/projects/${p.id}/`}>
-                <span class:list={['dot', isLive(p.data.status) ? 'live' : 'dev']}></span>
-                <span class="pname">{p.data.title}</span>
-                <span class="pstack">{p.data.tech.slice(0, 2).join(' · ').toLowerCase()}</span>
-                <span class:list={['pstat', isLive(p.data.status) ? 'live' : 'dev']}>
-                  {isLive(p.data.status) ? 'LIVE' : 'DEV'}
-                </span>
-              </a>
-            ))}
+            <!-- 上下滚动轮播:列表复制一份实现无缝循环,悬停暂停 -->
+            <div class="carousel">
+              <div class="track">
+                {[...projects, ...projects].map((p) => (
+                  <a class="prow" href={`/projects/${p.id}/`}>
+                    <span class:list={['dot', isLive(p.data.status) ? 'live' : 'dev']}></span>
+                    <span class="pname">{p.data.title}</span>
+                    <span class="pstack">{p.data.tech.slice(0, 2).join(' · ').toLowerCase()}</span>
+                    <span class:list={['pstat', isLive(p.data.status) ? 'live' : 'dev']}>
+                      {isLive(p.data.status) ? 'LIVE' : 'DEV'}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
           <div class="panel-foot">
             <span>git · github.com/leo-yuxiangchao</span>
@@ -176,14 +181,31 @@ const isLive = (s: string) => s.includes('已投入使用');---
     animation: pulse 2.2s ease-in-out infinite;
   }
   .panel-body { margin-top: 18px; }
+  /* 上下滚动轮播:视口固定高度,track 无限上移;列表渲染两份,位移 -50% 即无缝循环 */
+  .carousel {
+    --row-h: 45px;
+    height: calc(var(--row-h) * 3);
+    overflow: hidden;
+    mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+  }
+  .track {
+    animation: scroll-y var(--carousel-period, 12s) linear infinite;
+  }
+  .carousel:hover .track,
+  .carousel:focus-within .track { animation-play-state: paused; }
+  @keyframes scroll-y {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+  }
   .prow {
     display: grid;
     grid-template-columns: 10px 1fr auto auto;
     gap: 12px; align-items: center;
-    padding: 13px 4px;
+    height: var(--row-h);
+    padding: 0 4px;
     text-decoration: none;
     color: var(--ink);
-    border-radius: 8px;
   }
   .prow + .prow { border-top: 1px dashed var(--line); }
   .prow:hover .pname { color: var(--accent); }
@@ -229,6 +251,12 @@ const isLive = (s: string) => s.includes('已投入使用');---
   }
   .arrow { color: var(--dim); transition: transform .15s, color .15s; }
   .post:hover .arrow { transform: translateX(3px); color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track { animation: none; }
+    .carousel { height: auto; mask-image: none; -webkit-mask-image: none; }
+    .track .prow:nth-child(n+5) { display: none; }
+  }
 
   @media (max-width: 900px) {
     .hero { padding: 64px 0 72px; }
